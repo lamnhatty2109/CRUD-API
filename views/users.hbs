@@ -1,0 +1,119 @@
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="main container">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="black">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Image</th>
+                <th>Active</th>
+                <th>Manipulation</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {{#each users}}
+                <tr class="item">
+                    <td>{{ id }}</td>
+                    <td>{{ firstName }}</td>
+                    <td>{{ lastName }}</td>
+                    <td><img src="{{ image }}" alt=""></td>
+                    <td style="display: none;">{{ image }}</td>
+                    <td>{{ isActive }}</td>
+                    <checkbox></checkbox>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-delete">Delete</button>
+                        <button type="button" class="btn btn-primary btn-edit">Edit</button>
+                    </td>
+                </tr>
+            {{/each}} 
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button type="button" class="btn btn-success btn-add">New</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <form action="" method="POST" role="form" class="edit-form" style="display: none;" id="edit-form">
+        <legend>Edit</legend>
+        <div class="form-group">
+            <label for="">ID</label>
+            <input type="text" class="form-control id" id="" placeholder="Input field" name="id" disabled>
+            <label for="">First Name</label>
+            <input type="text" class="form-control firstname" id="" placeholder="Input field" name="firstName">
+            <label for="">Last Name</label>
+            <input type="text" class="form-control lastname" id="" placeholder="Input field" name="lastName">
+            <label for="">Image</label>
+            <input type="text" class="form-control image" id="" placeholder="Input field" name="image">
+        </div>
+        <button type="submit" class="btn btn-primary">Finish</button>
+    </form>
+
+     <form action="" method="POST" role="form" class="delete-form" style="display: none;" id="delete-form">
+         <legend>Delete</legend>
+        <div class="form-group">
+            <label for="">Delete user:</label>
+            <input type="text" class="form-control id" id="" placeholder="Input field" name="id" disabled>
+        </div>
+        <button type="submit" class="btn btn-primary">Delete</button>
+     </form>
+</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".btn-edit").click(function(){
+            $(".edit-form").css("display", "block");
+            var $row = jQuery(this).closest('tr');
+            var $columns = $row.find('td');
+            jQuery.each($columns, function (i, item) {
+                if(i == 0) $('.id').val(item.innerHTML);
+                else if(i == 1) $('.firstname').val(item.innerHTML);
+                else if(i == 2) $('.lastname').val(item.innerHTML);
+                else if(i == 4) $('.image').val(item.innerHTML);
+            });
+        });
+
+        $('#edit-form').submit(function(){
+			$.ajax('/jquery/submitData', {
+				type: 'PATCH'
+			});
+		});
+
+    });
+        jQuery(".btn-delete").click(function(){
+            alert('Hi');
+            $(".delete-form").css("display", "block");
+            var $row = jQuery(this).closest('tr');
+            var $columns = $row.find('td');
+            jQuery.each($columns, function (i, item) {
+                if(i == 0) $('.id').val(item.innerHTML);
+            });
+        });
+
+        jQuery('.delete-form').submit(function(){
+			$.ajax('/jquery/submitData', {
+				type: 'DELETE'
+			});
+		});
+</script>
+</html>
