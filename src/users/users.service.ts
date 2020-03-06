@@ -35,7 +35,7 @@ export class UsersService {
   }
 
   async add(firstName: string, lastName: string, image: string, isActive: boolean): Promise<void> {
-      var user = new User();
+      const user = new User();
 
       if(firstName) user.firstName = firstName;
       if(lastName) user.lastName = lastName;
@@ -46,7 +46,7 @@ export class UsersService {
   }
 
   async update(id: string, firstName: string, lastName: string, image: string, isActive: boolean): Promise<void> {
-    var user = new User();
+    const user = new User();
 
     if(id) user.id = id;
     if(firstName) user.firstName = firstName;
